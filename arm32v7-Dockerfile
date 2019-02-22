@@ -122,5 +122,5 @@ ENTRYPOINT /boot/newvm.sh
 ARG token
 RUN wget -O /microscanner https://get.aquasec.com/microscanner && \
     chmod +x /microscanner && \
-    /microscanner ${token} --continue-on-failure && \
+    /microscanner ${token} && \
     rm -rf /microscanner
