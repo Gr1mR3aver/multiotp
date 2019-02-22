@@ -28,7 +28,7 @@
 # 2018-03-20 5.1.1.2 SysCo/al Initial public Dockerfile release
 ##########################################################################
 
-FROM debian:9
+FROM arm32v7/debian:9
 ENV DEBIAN 9
 ENV PHPINSTALLPREFIX php
 ENV PHPINSTALLPREFIXSQLITE php7.0
@@ -116,3 +116,9 @@ RUN chmod 777 /boot/*.sh && \
 EXPOSE 80/tcp 443/tcp 1812/udp 1813/udp 
 
 ENTRYPOINT /boot/newvm.sh
+
+ARG token
+RUN wget -O /microscanner https://get.aquasec.com/microscanner && \
+    chmod +x /microscanner && \
+    /microscanner ${token} --continue-on-failure && \
+    rm -rf /microscanner
