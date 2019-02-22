@@ -10,8 +10,16 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'your-container-image-name:$(build.buildId)'
+  targetRegistry: '$(dockerId).azurecr.io'
+  targetImage: '$(targetRegistry)/$(imageName)'
+  targetImageTagged: '$(targetImage):$(build.buildId)'
 
 steps:
-- script: docker build -f Dockerfile -t $(imageName) .
+- script: | 
+    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+    docker build --build-arg=token=$(token) -f Dockerfile -t $(targetImageTagged) .
+    docker login -u $(username) -p $(pswd) $(targetRegistry)
+    docker tag $(targetImageTagged) $(targetImage):latest
+    docker push $(targetImageTagged)
+    docker push $(targetImage):latest
   displayName: 'docker build'
