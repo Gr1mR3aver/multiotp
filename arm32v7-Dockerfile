@@ -42,7 +42,9 @@ LABEL Description="multiOTP open source, running on Debian ${DEBIAN} with PHP${P
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN echo slapd slapd/internal/adminpw password rtzewrpiZRT753 | debconf-set-selections; \
+RUN apt-get update && \
+    apt-get install -y debconf-utils &&
+    RUN echo slapd slapd/internal/adminpw password rtzewrpiZRT753 | debconf-set-selections; \
     echo slapd slapd/internal/generated_adminpw password rtzewrpiZRT753 | debconf-set-selections; \
     echo slapd slapd/password2 password rtzewrpiZRT753 | debconf-set-selections; \
     echo slapd slapd/password1 password rtzewrpiZRT753 | debconf-set-selections;
