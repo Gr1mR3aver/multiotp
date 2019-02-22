@@ -92,8 +92,8 @@ RUN apt-get update && \
 ############################################################
 # Offline local docker image creation
 ############################################################
-COPY raspberry/boot-part/*.sh /boot/
-COPY raspberry/boot-part/multiotp-tree /boot/multiotp-tree/
+# COPY raspberry/boot-part/*.sh /boot/
+# COPY raspberry/boot-part/multiotp-tree /boot/multiotp-tree/
 
 
 ############################################################
@@ -101,11 +101,10 @@ COPY raspberry/boot-part/multiotp-tree /boot/multiotp-tree/
 # (if you want to build an image with the latest
 #  available version instead of the local one)
 #
-# RUN wget -q http://download.multiotp.net/multiotp.zip -O /tmp/multiotp.zip && \
-#     unzip -q -o /tmp/multiotp.zip -d /tmp/multiotp
-# 
-# RUN mv /tmp/multiotp/raspberry/boot-part/* /boot && \
-#     rm -rf /tmp/multiotp
+ RUN wget -q http://download.multiotp.net/multiotp.zip -O /tmp/multiotp.zip && \
+     unzip -q -o /tmp/multiotp.zip -d /tmp/multiotp && \
+     mv /tmp/multiotp/raspberry/boot-part/* /boot && \
+     rm -rf /tmp/multiotp
 ############################################################
 
 
