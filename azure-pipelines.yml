@@ -17,7 +17,7 @@ variables:
 steps:
 - script: | 
     docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    docker build --build-arg=token=$(token) -f Dockerfile -t $(targetImageTagged) .
+    docker build --build-arg=token=$(token) -f arm32v7-Dockerfile -t $(targetImageTagged) .
     docker login -u $(username) -p $(pswd) $(targetRegistry)
     docker tag $(targetImageTagged) $(targetImage):latest
     docker push $(targetImageTagged)
